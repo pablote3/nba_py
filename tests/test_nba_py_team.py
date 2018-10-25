@@ -1,30 +1,41 @@
+import unittest
 from nba_py import team
 from nba_py.player import get_player
 from nba_py.constants import TEAMS
 
-def test():
-    team_id = TEAMS['ATL']['id']
-    player_id = get_player('Lebron', 'James')
-    assert team.TeamList()
-    assert team.TeamSummary(team_id)
-    team_details = team.TeamDetails(team_id)
-    assert team_details
-    assert team_details.background()
-    assert team_details.history()
-    assert team.TeamCommonRoster(team_id)
-    assert team.TeamGeneralSplits(team_id)
-    assert team.TeamOpponentSplits(team_id)
-    assert team.TeamLastNGamesSplits(team_id)
-    assert team.TeamInGameSplits(team_id)
-    assert team.TeamClutchSplits(team_id)
-    assert team.TeamShootingSplits(team_id)
-    assert team.TeamPerformanceSplits(team_id)
-    assert team.TeamLineups(team_id)
-    assert team.TeamPlayers(team_id)
-    assert team.TeamPlayerOnOffDetail(team_id)
-    assert team.TeamPlayerOnOffSummary(team_id)
-    assert team.TeamGameLogs(team_id)
-    assert team.TeamShotTracking(team_id)
-    assert team.TeamReboundTracking(team_id)
-    assert team.TeamPassTracking(team_id)
-    assert team.TeamVsPlayer(team_id, player_id)
+
+class TestTeam(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.teamId = TEAMS['ATL']['id']
+        cls.playerId = get_player('Lebron', 'James')
+
+    def testAll(self):
+        assert team.TeamList()
+        assert team.TeamSummary(self.teamId)
+        team_details = team.TeamDetails(self.teamId)
+        assert team_details
+        # assert team_details.background()
+        # assert team_details.history()
+        assert team.TeamCommonRoster(self.teamId)
+        assert team.TeamGeneralSplits(self.teamId)
+        assert team.TeamOpponentSplits(self.teamId)
+        assert team.TeamLastNGamesSplits(self.teamId)
+        assert team.TeamInGameSplits(self.teamId)
+        assert team.TeamClutchSplits(self.teamId)
+        assert team.TeamShootingSplits(self.teamId)
+        assert team.TeamPerformanceSplits(self.teamId)
+        assert team.TeamLineups(self.teamId)
+        assert team.TeamPlayers(self.teamId)
+        assert team.TeamPlayerOnOffDetail(self.teamId)
+        assert team.TeamPlayerOnOffSummary(self.teamId)
+        assert team.TeamGameLogs(self.teamId)
+        assert team.TeamShotTracking(self.teamId)
+        assert team.TeamReboundTracking(self.teamId)
+        assert team.TeamPassTracking(self.teamId)
+        assert team.TeamVsPlayer(self.teamId, self.playerId)
+
+    def test_TeamSeasons(self):
+        teamstats = team.TeamSeasons(self.teamId)
+        info = teamstats.info()
+        self.assertTrue((70, 34), info.shape)
