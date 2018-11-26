@@ -46,21 +46,93 @@ class TestGame(unittest.TestCase):
 
     def testBoxScoreFourFactors(self):
         boxscorefourfactors = game.BoxscoreFourFactors(self.gameId)
+
         playerfourfactors = boxscorefourfactors.sql_players_four_factors()
         self.assertTrue((26, 17), playerfourfactors.shape)
         self.assertTrue(('Aaron Gordon' == playerfourfactors[1:2].PLAYER_NAME).all())
 
+        teamfourfactors = boxscorefourfactors.sql_team_four_factors()
+        self.assertTrue((2, 14), teamfourfactors.shape)
+        self.assertTrue(('Celtics' == teamfourfactors[1:2].TEAM_NAME).all())
+
+    def testBoxScoreFourFactorsWithArguments(self):
+        boxscorefourfactors = game.BoxscoreFourFactors(self.gameId,
+                                                        '2017-18',          #season
+                                                        'Regular Season',   #season_type
+                                                        '0',                #range_type
+                                                        '0',                #start_period
+                                                        '0',                #end_period
+                                                        '0',                #start_range
+                                                        '0')                #end_range
+
+        playerfourfactors = boxscorefourfactors.sql_players_four_factors()
+        self.assertTrue((26, 17), playerfourfactors.shape)
+        self.assertTrue(('Aaron Gordon' == playerfourfactors[1:2].PLAYER_NAME).all())
+
+        teamfourfactors = boxscorefourfactors.sql_team_four_factors()
+        self.assertTrue((2, 14), teamfourfactors.shape)
+        self.assertTrue(('Celtics' == teamfourfactors[1:2].TEAM_NAME).all())
+
+    def testBoxScoreMisc(self):
+        boxscoreadvanced = game.BoxscoreMisc(self.gameId)
+
+        playermisc = boxscoreadvanced.sql_players_misc()
+        self.assertTrue((26, 21), playermisc.shape)
+        self.assertTrue(('Aaron Gordon' == playermisc[1:2].PLAYER_NAME).all())
+
+        teammisc = boxscoreadvanced.sql_team_misc()
+        self.assertTrue((2, 18), teammisc.shape)
+        self.assertTrue(('Celtics' == teammisc[1:2].TEAM_NAME).all())
+
     def testBoxScoreScoring(self):
         boxscorescoring = game.BoxscoreScoring(self.gameId)
+
         playerscoring = boxscorescoring.sql_players_scoring()
         self.assertTrue((26, 24), playerscoring.shape)
         self.assertTrue(('Aaron Gordon' == playerscoring[1:2].PLAYER_NAME).all())
 
+        teamscoring = boxscorescoring.sql_team_scoring()
+        self.assertTrue((2, 21), teamscoring.shape)
+        self.assertTrue(('Celtics' == teamscoring[1:2].TEAM_NAME).all())
+
     def testBoxScoreSummary(self):
         boxscoresummary = game.BoxscoreSummary(self.gameId)
+
+        availablevideo = boxscoresummary.available_video()
+        self.assertTrue((1, 7), availablevideo.shape)
+        self.assertTrue((2 == availablevideo[0:2].VIDEO_AVAILABLE_FLAG).all())
+
+        gameinfo = boxscoresummary.game_info()
+        self.assertTrue((1, 3), gameinfo.shape)
+        self.assertTrue((18624 == gameinfo[1:2].ATTENDANCE).all())
+
+        gamesummary = boxscoresummary.game_summary()
+        self.assertTrue((1, 14), gamesummary.shape)
+        self.assertTrue(('20181022/ORLBOS' == gamesummary[1:2].GAMECODE).all())
+
+        inactiveplayers = boxscoresummary.inactive_players()
+        self.assertTrue((8, 8), inactiveplayers.shape)
+        self.assertTrue(('Dozier' == inactiveplayers[1:2].LAST_NAME).all())
+
+        lastmeeting = boxscoresummary.last_meeting()
+        self.assertTrue((1, 13), lastmeeting.shape)
+        self.assertTrue(('Orlando' == lastmeeting[1:2].LAST_GAME_VISITOR_TEAM_CITY).all())
+
+        linescore = boxscoresummary.line_score()
+        self.assertTrue((2, 23), linescore.shape)
+        self.assertTrue((93 == linescore[1:2].PTS).all())
+
         officials = boxscoresummary.officials()
         self.assertTrue((3, 4), officials.shape)
         self.assertTrue(('Orr' == officials[1:2].LAST_NAME).all())
+
+        otherstats = boxscoresummary.other_stats()
+        self.assertTrue((2, 14), otherstats.shape)
+        self.assertTrue(('Orlando' == otherstats[1:2].TEAM_CITY).all())
+
+        seasonseries = boxscoresummary.season_series()
+        self.assertTrue((1, 7), seasonseries.shape)
+        self.assertTrue(('Orlando' == seasonseries[1:2].SERIES_LEADER).all())
 
     def testBoxScoreUsage(self):
         boxscoreusage = game.BoxscoreUsage(self.gameId)
@@ -97,7 +169,7 @@ class TestGame(unittest.TestCase):
 
         availablevideo = playbyplay.available_video()
         self.assertTrue((1, 1), availablevideo.shape)
-        self.assertTrue((2 == availablevideo.VIDEO_AVAILABLE_FLAG).all())
+        self.assertTrue((2 == availablevideo[0:2].VIDEO_AVAILABLE_FLAG).all())
 
     def testPlayerTracking(self):
         playertracking = game.PlayerTracking(self.gameId)
