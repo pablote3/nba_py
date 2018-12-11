@@ -174,6 +174,6 @@ class TestGame(unittest.TestCase):
     def testPlayerTracking(self):
         playertracking = game.PlayerTracking(self.gameId)
 
-        info = playertracking.info();
+        info = playertracking.info()
         self.assertTrue((26, 29), info.shape)
         self.assertTrue(('Aaron Gordon' == info[1:2].PLAYER_NAME).all())
