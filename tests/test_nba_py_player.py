@@ -59,48 +59,18 @@ class TestPlayer(unittest.TestCase):
     def testPlayerCareer(self):
         playercareer = player.PlayerCareer(self.playerId)
 
-        allstarseasontotals = playercareer.all_star_season_totals()
-        self.assertTrue((15, 27), allstarseasontotals.shape)
-        self.assertTrue(('WST' == allstarseasontotals[1:2].TEAM_ABBREVIATION).all())
-
-        careerallstarseasontotals = playercareer.career_all_star_season_totals()
-        self.assertTrue((1, 24), careerallstarseasontotals.shape)
-        self.assertTrue((15 == careerallstarseasontotals[0:1].GP).all())
-
-        collegeseasoncareertotals = playercareer.college_season_career_totals()
-        self.assertTrue((1, 24), collegeseasoncareertotals.shape)
-        self.assertTrue((128 == collegeseasoncareertotals[0:1].GP).all())
-
-        collegeseasontotals = playercareer.college_season_totals()
-        self.assertTrue((4, 27), collegeseasontotals.shape)
-        self.assertTrue((31 == collegeseasontotals[0:1].GP).all())
-
-        postseasoncareertotals = playercareer.post_season_career_totals()
-        self.assertTrue((1, 24), postseasoncareertotals.shape)
-        self.assertTrue((251 == postseasoncareertotals[0:1].GP).all())
-
-        postseasontotals = playercareer.post_season_totals()
-        self.assertTrue((18, 27), postseasontotals.shape)
-        self.assertTrue((9 == postseasontotals[0:1].GP).all())
-
+        self.assertTrue((15, 27), playercareer.all_star_season_totals().shape)
+        self.assertTrue((1 == playercareer.all_star_season_totals()[1:2].GP).all())
+        self.assertTrue((15 == playercareer.career_all_star_season_totals()[0:1].GP).all())
+        self.assertTrue((128 == playercareer.college_season_career_totals()[0:1].GP).all())
+        self.assertTrue((31 == playercareer.college_season_totals()[0:1].GP).all())
+        self.assertTrue((251 == playercareer.post_season_career_totals()[0:1].GP).all())
+        self.assertTrue((9 == playercareer.post_season_totals()[0:1].GP).all())
         #postseasonrankings = playercareer.post_season_rankings()
-
-        preseasoncareertotals = playercareer.preseason_career_totals()
-        self.assertTrue((18, 27), preseasoncareertotals.shape)
-        self.assertTrue(('NR' == preseasoncareertotals[0:1].GP).all())
-
-        preseasonseasontotals = playercareer.preseason_season_totals()
-        self.assertTrue((19, 27), preseasonseasontotals.shape)
-        self.assertTrue(('NR' == preseasonseasontotals[0:1].GP).all())
-
-        regularseasoncareertotals = playercareer.regular_season_career_totals()
-        self.assertTrue((1, 24), regularseasoncareertotals.shape)
-        self.assertTrue((1392 == regularseasoncareertotals[0:1].GP).all())
-
-        regularseasontotals = playercareer.regular_season_totals()
-        self.assertTrue((19, 27), regularseasontotals.shape)
-        self.assertTrue((82 == regularseasontotals[0:1].GP).all())
-
+        self.assertTrue(('NR' == playercareer.preseason_career_totals()[0:1].GP).all())
+        self.assertTrue(('NR' == playercareer.preseason_season_totals()[0:1].GP).all())
+        self.assertTrue((1392 == playercareer.regular_season_career_totals()[0:1].GP).all())
+        self.assertTrue((82 == playercareer.regular_season_totals()[0:1].GP).all())
         #regularseasonrankings = playercareer.regular_season_rankings()
 
     def testPlayerClutchSplits(self):
@@ -172,10 +142,43 @@ class TestPlayer(unittest.TestCase):
                                                          self.gameSegment,
                                                          self.lastNGames)
 
-        self.assertTrue((6, 62) == playergeneralsplits.days_rest().shape)
+        self.assertTrue((1, 62) == playergeneralsplits.overall().shape)
+        self.assertTrue((31 == playergeneralsplits.overall()[0:1].GP).all())
         self.assertTrue((1 == playergeneralsplits.days_rest()[0:1].GP).all())
         self.assertTrue((31 == playergeneralsplits.location()[0:1].GP).all())
         self.assertTrue((1 == playergeneralsplits.month()[0:1].GP).all())
         self.assertTrue((20 == playergeneralsplits.pre_post_all_star()[0:1].GP).all())
         self.assertTrue((30 == playergeneralsplits.starting_position()[0:1].GP).all())
         self.assertTrue((31 == playergeneralsplits.win_losses()[0:1].GP).all())
+
+    def testPlayerInGameSplits(self):
+        playeringamesplits = player.PlayerInGameSplits(self.playerId,
+                                                       self.teamId,
+                                                       self.measureType,
+                                                       self.perMode,
+                                                       self.plusMinus,
+                                                       self.paceAdjust,
+                                                       self.rank,
+                                                       self.leagueId,
+                                                       self.season,
+                                                       self.seasonType,
+                                                       self.poRound,
+                                                       self.outcome,
+                                                       self.location,
+                                                       self.month,
+                                                       self.sessionSegment,
+                                                       self.dateFrom,
+                                                       self.dateTo,
+                                                       self.opponentTeamId,
+                                                       self.vsConference,
+                                                       self.vsDivision,
+                                                       self.gameSegment,
+                                                       self.lastNGames)
+
+        self.assertTrue((1, 62) == playeringamesplits.overall().shape)
+        self.assertTrue((31 == playeringamesplits.overall()[0:1].GP).all())
+        self.assertTrue((1 == playeringamesplits.by_actual_margin()[0:1].GP).all())
+        self.assertTrue((31 == playeringamesplits.by_half()[0:1].GP).all())
+        self.assertTrue((31 == playeringamesplits.by_period()[0:1].GP).all())
+        self.assertTrue((31 == playeringamesplits.by_score_margin()[0:1].GP).all())
+
