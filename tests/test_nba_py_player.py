@@ -182,3 +182,72 @@ class TestPlayer(unittest.TestCase):
         self.assertTrue((31 == playeringamesplits.by_period()[0:1].GP).all())
         self.assertTrue((31 == playeringamesplits.by_score_margin()[0:1].GP).all())
 
+    def testPlayerLastNGameSplits(self):
+        playerlastngamesplits = player.PlayerLastNGamesSplits(self.playerId,
+                                                              self.teamId,
+                                                              self.measureType,
+                                                              self.perMode,
+                                                              self.plusMinus,
+                                                              self.paceAdjust,
+                                                              self.rank,
+                                                              self.leagueId,
+                                                              self.season,
+                                                              self.seasonType,
+                                                              self.poRound,
+                                                              self.outcome,
+                                                              self.location,
+                                                              self.month,
+                                                              self.sessionSegment,
+                                                              self.dateFrom,
+                                                              self.dateTo,
+                                                              self.opponentTeamId,
+                                                              self.vsConference,
+                                                              self.vsDivision,
+                                                              self.gameSegment,
+                                                              self.lastNGames)
+
+        self.assertTrue((1, 62) == playerlastngamesplits.overall().shape)
+        self.assertTrue((31 == playerlastngamesplits.overall()[0:1].GP).all())
+        self.assertTrue((4 == playerlastngamesplits.gamenumber()[0:1].GP).all())
+        self.assertTrue((2 == playerlastngamesplits.last5()[0:1].GP).all())
+        self.assertTrue((6 == playerlastngamesplits.last10()[0:1].GP).all())
+        self.assertTrue((10 == playerlastngamesplits.last15()[0:1].GP).all())
+        self.assertTrue((11 == playerlastngamesplits.last20()[0:1].GP).all())
+
+    def testPlayerList(self):
+        playerlist = player.PlayerList(self.leagueId,
+                                       self.season,
+                                       1)
+
+        self.assertTrue((101, 13) == playerlist.info().shape)
+        self.assertTrue(('Memphis' == playerlist.info()[0:1].TEAM_CITY).all())
+
+    def testPlayerOpponentSplits(self):
+        playeropponentsplits = player.PlayerOpponentSplits(self.playerId,
+                                                           self.teamId,
+                                                           self.measureType,
+                                                           self.perMode,
+                                                           self.plusMinus,
+                                                           self.paceAdjust,
+                                                           self.rank,
+                                                           self.leagueId,
+                                                           self.season,
+                                                           self.seasonType,
+                                                           self.poRound,
+                                                           self.outcome,
+                                                           self.location,
+                                                           self.month,
+                                                           self.sessionSegment,
+                                                           self.dateFrom,
+                                                           self.dateTo,
+                                                           self.opponentTeamId,
+                                                           self.vsConference,
+                                                           self.vsDivision,
+                                                           self.gameSegment,
+                                                           self.lastNGames)
+
+        self.assertTrue((1, 62) == playeropponentsplits.overall().shape)
+        self.assertTrue((31 == playeropponentsplits.overall()[0:1].GP).all())
+        self.assertTrue((13 == playeropponentsplits.by_conference()[0:1].GP).all())
+        self.assertTrue((5 == playeropponentsplits.by_division()[0:1].GP).all())
+        self.assertTrue((1 == playeropponentsplits.by_opponent()[0:1].GP).all())
