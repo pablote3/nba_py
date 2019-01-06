@@ -5,6 +5,7 @@ try:
 except ImportError:
     pass
 
+
 class TestPlayerSpeedDistanceTracking:
 
     def test_overall(self):

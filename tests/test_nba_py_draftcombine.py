@@ -1,16 +1,16 @@
+import unittest
 from nba_py import draftcombine
 try:
-    # python 2 compatability
     from future_builtins import filter
 except ImportError:
     pass
 
 
-class TestSummary:
-
-    def setup(self):
-        self.player_name = 'Devin Booker'
-        self.season = '2015-16'
+class TestSummary(unittest.TestCase):
+    @classmethod
+    def setup(cls):
+        cls.player_name = 'Devin Booker'
+        cls.season = '2015-16'
 
     def test_overall(self):
         results = draftcombine.Summary(season=self.season)
@@ -39,10 +39,10 @@ class TestSummary:
 
 
 class TestDrillResults:
-
-    def setup(self):
-        self.player_name = 'Devin Booker'
-        self.season = '2015-16'
+    @classmethod
+    def setup(cls):
+        cls.player_name = 'Devin Booker'
+        cls.season = '2015-16'
 
     def test_overall(self):
         results = draftcombine.DrillResults(season=self.season)
@@ -62,10 +62,10 @@ class TestDrillResults:
 
 
 class TestSpotShooting:
-
-    def setup(self):
-        self.player_name = 'Devin Booker'
-        self.season = '2015-16'
+    @classmethod
+    def setup(cls):
+        cls.player_name = 'Devin Booker'
+        cls.season = '2015-16'
 
     def test_overall(self):
         results = draftcombine.SpotShooting(season=self.season)
@@ -78,48 +78,48 @@ class TestSpotShooting:
         assert stats
 
         assert stats['PLAYER_NAME'] == self.player_name
-        assert stats['COLLEGE_BREAK_LEFT_MADE'] == None
-        assert stats['COLLEGE_BREAK_LEFT_PCT'] == None
-        assert stats['COLLEGE_BREAK_RIGHT_ATTEMPT'] == None
-        assert stats['COLLEGE_BREAK_RIGHT_MADE'] == None
-        assert stats['COLLEGE_BREAK_RIGHT_PCT'] == None
-        assert stats['COLLEGE_CORNER_LEFT_ATTEMPT'] == None
-        assert stats['COLLEGE_CORNER_LEFT_MADE'] == None
-        assert stats['COLLEGE_CORNER_LEFT_PCT'] == None
-        assert stats['COLLEGE_CORNER_RIGHT_ATTEMPT'] == None
-        assert stats['COLLEGE_CORNER_RIGHT_MADE'] == None
-        assert stats['COLLEGE_CORNER_RIGHT_PCT'] == None
-        assert stats['COLLEGE_TOP_KEY_ATTEMPT'] == None
-        assert stats['COLLEGE_TOP_KEY_MADE'] == None
-        assert stats['COLLEGE_TOP_KEY_PCT'] == None
-        assert stats['FIFTEEN_BREAK_LEFT_ATTEMPT'] == None
-        assert stats['FIFTEEN_BREAK_LEFT_MADE'] == None
-        assert stats['FIFTEEN_BREAK_LEFT_PCT'] == None
-        assert stats['FIFTEEN_BREAK_RIGHT_ATTEMPT'] == None
-        assert stats['FIFTEEN_BREAK_RIGHT_MADE'] == None
-        assert stats['FIFTEEN_BREAK_RIGHT_PCT'] == None
-        assert stats['FIFTEEN_CORNER_LEFT_ATTEMPT'] == None
-        assert stats['FIFTEEN_CORNER_LEFT_MADE'] == None
-        assert stats['FIFTEEN_CORNER_LEFT_PCT'] == None
-        assert stats['FIFTEEN_CORNER_RIGHT_ATTEMPT'] == None
-        assert stats['FIFTEEN_CORNER_RIGHT_MADE'] == None
-        assert stats['FIFTEEN_CORNER_RIGHT_PCT'] == None
-        assert stats['FIFTEEN_TOP_KEY_ATTEMPT'] == None
-        assert stats['FIFTEEN_TOP_KEY_MADE'] == None
-        assert stats['FIFTEEN_TOP_KEY_PCT'] == None
-        assert stats['NBA_BREAK_LEFT_ATTEMPT'] == None
-        assert stats['NBA_BREAK_LEFT_MADE'] == None
-        assert stats['NBA_BREAK_LEFT_PCT'] == None
-        assert stats['NBA_BREAK_RIGHT_ATTEMPT'] == None
-        assert stats['NBA_BREAK_RIGHT_MADE'] == None
-        assert stats['NBA_BREAK_RIGHT_PCT'] == None
-        assert stats['NBA_CORNER_LEFT_ATTEMPT'] == None
-        assert stats['NBA_CORNER_LEFT_MADE'] == None
-        assert stats['NBA_CORNER_LEFT_PCT'] == None
-        assert stats['NBA_CORNER_RIGHT_ATTEMPT'] == None
-        assert stats['NBA_CORNER_RIGHT_MADE'] == None
-        assert stats['NBA_CORNER_RIGHT_PCT'] == None
-        assert stats['NBA_TOP_KEY_ATTEMPT'] == None
-        assert stats['NBA_TOP_KEY_MADE'] == None
-        assert stats['NBA_TOP_KEY_PCT'] == None
-        assert stats['PLAYER_ID'] == None
+        assert stats['COLLEGE_BREAK_LEFT_MADE'] is None
+        assert stats['COLLEGE_BREAK_LEFT_PCT'] is None
+        assert stats['COLLEGE_BREAK_RIGHT_ATTEMPT'] is None
+        assert stats['COLLEGE_BREAK_RIGHT_MADE'] is None
+        assert stats['COLLEGE_BREAK_RIGHT_PCT'] is None
+        assert stats['COLLEGE_CORNER_LEFT_ATTEMPT'] is None
+        assert stats['COLLEGE_CORNER_LEFT_MADE'] is None
+        assert stats['COLLEGE_CORNER_LEFT_PCT'] is None
+        assert stats['COLLEGE_CORNER_RIGHT_ATTEMPT'] is None
+        assert stats['COLLEGE_CORNER_RIGHT_MADE'] is None
+        assert stats['COLLEGE_CORNER_RIGHT_PCT'] is None
+        assert stats['COLLEGE_TOP_KEY_ATTEMPT'] is None
+        assert stats['COLLEGE_TOP_KEY_MADE'] is None
+        assert stats['COLLEGE_TOP_KEY_PCT'] is None
+        assert stats['FIFTEEN_BREAK_LEFT_ATTEMPT'] is None
+        assert stats['FIFTEEN_BREAK_LEFT_MADE'] is None
+        assert stats['FIFTEEN_BREAK_LEFT_PCT'] is None
+        assert stats['FIFTEEN_BREAK_RIGHT_ATTEMPT'] is None
+        assert stats['FIFTEEN_BREAK_RIGHT_MADE'] is None
+        assert stats['FIFTEEN_BREAK_RIGHT_PCT'] is None
+        assert stats['FIFTEEN_CORNER_LEFT_ATTEMPT'] is None
+        assert stats['FIFTEEN_CORNER_LEFT_MADE'] is None
+        assert stats['FIFTEEN_CORNER_LEFT_PCT'] is None
+        assert stats['FIFTEEN_CORNER_RIGHT_ATTEMPT'] is None
+        assert stats['FIFTEEN_CORNER_RIGHT_MADE'] is None
+        assert stats['FIFTEEN_CORNER_RIGHT_PCT'] is None
+        assert stats['FIFTEEN_TOP_KEY_ATTEMPT'] is None
+        assert stats['FIFTEEN_TOP_KEY_MADE'] is None
+        assert stats['FIFTEEN_TOP_KEY_PCT'] is None
+        assert stats['NBA_BREAK_LEFT_ATTEMPT'] is None
+        assert stats['NBA_BREAK_LEFT_MADE'] is None
+        assert stats['NBA_BREAK_LEFT_PCT'] is None
+        assert stats['NBA_BREAK_RIGHT_ATTEMPT'] is None
+        assert stats['NBA_BREAK_RIGHT_MADE'] is None
+        assert stats['NBA_BREAK_RIGHT_PCT'] is None
+        assert stats['NBA_CORNER_LEFT_ATTEMPT'] is None
+        assert stats['NBA_CORNER_LEFT_MADE'] is None
+        assert stats['NBA_CORNER_LEFT_PCT'] is None
+        assert stats['NBA_CORNER_RIGHT_ATTEMPT'] is None
+        assert stats['NBA_CORNER_RIGHT_MADE'] is None
+        assert stats['NBA_CORNER_RIGHT_PCT'] is None
+        assert stats['NBA_TOP_KEY_ATTEMPT'] is None
+        assert stats['NBA_TOP_KEY_MADE'] is None
+        assert stats['NBA_TOP_KEY_PCT'] is None
+        assert stats['PLAYER_ID'] is None

@@ -57,13 +57,13 @@ class TestGame(unittest.TestCase):
 
     def testBoxScoreFourFactorsWithArguments(self):
         boxscorefourfactors = game.BoxscoreFourFactors(self.gameId,
-                                                        '2017-18',          #season
-                                                        'Regular Season',   #season_type
-                                                        '0',                #range_type
-                                                        '0',                #start_period
-                                                        '0',                #end_period
-                                                        '0',                #start_range
-                                                        '0')                #end_range
+                                                       '2017-18',
+                                                       'Regular Season',
+                                                       '0',
+                                                       '0',
+                                                       '0',
+                                                       '0',
+                                                       '0')
 
         playerfourfactors = boxscorefourfactors.sql_players_four_factors()
         self.assertTrue((26, 17), playerfourfactors.shape)
